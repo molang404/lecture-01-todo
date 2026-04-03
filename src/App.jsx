@@ -6,6 +6,32 @@ function App() {
     const [todo, setTodo] = useState("");
     const [list, setList] = useState([]);
 
+    const onChange = event => {
+        // 저 todo라는 state에 input에 입력 받을 값을 저장 시켜야 함
+        // event라고 하는 Javascript 엔진이 분석한 사건 내용을 가지고 보니
+        // event.target.value 라는 값에 input에 입력된 값이 들어 있더라
+        setTodo(event.target.value);
+    }
+    const onSubmit = event => {
+        // chrome 같은 웹 브라우저는 기본적으로 onSubmit이 내장되어있는 기능이 이미 존재함
+        // 무슨 기능?, input의 내용들을 전송하고 새로고침하는 기능
+        // 그래서 이 기능을 무효화 시킬 필요가 있음 -> event.preventDefault();
+        event.preventDefault();
+
+        if (todo === "") {
+            return;
+        }
+
+        // 1. todo에 저장되어 있는 값을 list로 옮기고
+        // list = [...list, "ㄱㄴㄷ"]    => spread 문법(...) : 배열이나 객체의 내부 요소를 나열시키는 문법
+        // list = [ ...["123"], "ㄱㄴㄷ"]
+        // list = [ "123", "ㄱㄴㄷ"]
+        setList([...list, todo]);
+        // 2. todo의 값을 삭제 하고
+        setTodo("");
+        // 3. input에 입력된 값도 삭제해야함  -> input이라고 하는 태그의 value 속성을 비워줘야 되는 일
+    };
+
     return (
         <div>
             <h1>My todo ({list.length})</h1>
@@ -14,25 +40,7 @@ function App() {
                 form의 onSubmit 속성을 실행시킴
             */}
             <form
-                onSubmit={event => {
-                    // chrome 같은 웹 브라우저는 기본적으로 onSubmit이 내장되어있는 기능이 이미 존재함
-                    // 무슨 기능?, input의 내용들을 전송하고 새로고침하는 기능
-                    // 그래서 이 기능을 무효화 시킬 필요가 있음 -> event.preventDefault();
-                    event.preventDefault();
-
-                    if (todo === "") {
-                        return;
-                    }
-
-                    // 1. todo에 저장되어 있는 값을 list로 옮기고
-                    // list = [...list, "ㄱㄴㄷ"]    => spread 문법(...) : 배열이나 객체의 내부 요소를 나열시키는 문법
-                    // list = [ ...["123"], "ㄱㄴㄷ"]
-                    // list = [ "123", "ㄱㄴㄷ"]
-                    setList([...list, todo]);
-                    // 2. todo의 값을 삭제 하고
-                    setTodo("");
-                    // 3. input에 입력된 값도 삭제해야함  -> input이라고 하는 태그의 value 속성을 비워줘야 되는 일
-                }}>
+                onSubmit={onSubmit}>
                 {/*
                     input에 입력이 될 때마다 실행하는 속성 : onChange
                     입력이 일어난 "사건 (이벤트)"이고,
@@ -41,12 +49,7 @@ function App() {
                 */}
                 <input
                     placeholder={"Write your to do..."}
-                    onChange={event => {
-                        // 저 todo라는 state에 input에 입력 받을 값을 저장 시켜야 함
-                        // event라고 하는 Javascript 엔진이 분석한 사건 내용을 가지고 보니
-                        // event.target.value 라는 값에 input에 입력된 값이 들어 있더라
-                        setTodo(event.target.value);
-                    }}
+                    onChange={onChange}
                     value={todo}
                     // 1. input에서 엔터를 치면, onSubmit이 발동
                     // 2. onSubmit 안에 있는 setTodo를 실행시켜서 todo의 값을 ""(빈 스트링)으로 바꾸고
