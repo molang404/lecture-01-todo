@@ -4,7 +4,7 @@ function App() {
     const [name, setName] = useState(""); // input 관리용 state
     const [cart, setCart] = useState([]); // 장바구니 관리용 state
 
-    const cnChange = e => {
+    const onChange = e => {
         setName(e.target.value);
         };
 
@@ -69,7 +69,7 @@ function App() {
                     <tr key={index}>
                         <td>{value.name}</td>
                         <td>
-                            <button onClick={() => { onUpdateCount(index, -1)}>-</button>
+                            <button onClick={() => { onUpdateCount(index, -1)}}>-</button>
                             {value.quantity}
                             <button onClick={() => onUpdateCount(index, +1)}>+</button>
                         </td>
@@ -93,6 +93,6 @@ function App() {
             <h3>총 품목 : {cart.length}개 / 총 수량 : 0개</h3>
         </div>
     );
-};
+}
 
 export default App;
