@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import MovieCard from "./components/MovieCard.jsx";
+import "./styles/global.css"; // global.css 를 불러오고 싶다. from이 안 붙음
 
 function App() {
     // 외부에서 대이터를 받아다가 화면을 출력해주는 프로그램
